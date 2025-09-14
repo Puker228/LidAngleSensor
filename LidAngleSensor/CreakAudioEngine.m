@@ -270,16 +270,14 @@ static const double kAdditionalDecayFactor = 0.8;     // Additional decay after 
         gain = 1.0 - s; // invert: slow = loud, fast = quiet
         gain = fmax(0.0, fmin(1.0, gain));
     }
-    
-    // Calculate target pitch/tempo rate based on movement speed
-    double normalizedVelocity = fmax(0.0, fmin(1.0, speed / kVelocityQuiet));
-    double rate = kMinRate + normalizedVelocity * (kMaxRate - kMinRate);
-    rate = fmax(kMinRate, fmin(kMaxRate, rate));
-    
+
+    // Отключаем изменение pitch/tempo: всегда rate = 1.0
+    double rate = 1.0;
+
     // Store targets for smooth ramping
     self.targetGain = gain;
     self.targetRate = rate;
-    
+
     // Apply smooth parameter transitions
     [self rampToTargetParameters];
 }
